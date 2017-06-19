@@ -1,4 +1,4 @@
-    package com.saran.mimemotest;
+package com.saran.mimemotest;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,20 +43,8 @@ public class PresentacionActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        tab = new Tablero(new ArrayList<Ficha>());
+        tab = new Tablero(0);
 
-        tab.addFicha(new Ficha(R.drawable.img_1));
-        tab.addFicha(new Ficha(R.drawable.img_2));
-        tab.addFicha(new Ficha(R.drawable.img_3));
-        tab.addFicha(new Ficha(R.drawable.img_4));
-        tab.addFicha(new Ficha(R.drawable.img_5));
-        tab.addFicha(new Ficha(R.drawable.img_6));
-        tab.addFicha(new Ficha(R.drawable.img_1));
-        tab.addFicha(new Ficha(R.drawable.img_2));
-        tab.addFicha(new Ficha(R.drawable.img_3));
-        tab.addFicha(new Ficha(R.drawable.img_4));
-        tab.addFicha(new Ficha(R.drawable.img_5));
-        tab.addFicha(new Ficha(R.drawable.img_6));
         RecyclerView list = (RecyclerView)findViewById(R.id.list);
         GridLayoutManager layoutManager = new GridLayoutManager(this,2);
         //LinearLayoutManager layoutManager = new LinearLayoutManager(this);
