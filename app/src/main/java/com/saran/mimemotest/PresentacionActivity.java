@@ -1,8 +1,11 @@
-package com.saran.mimemotest;
+    package com.saran.mimemotest;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +16,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import Juego.AdapterTablero;
+import Juego.Ficha;
+import Juego.Tablero;
+
 public class PresentacionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Tablero tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +33,6 @@ public class PresentacionActivity extends AppCompatActivity
         setContentView(R.layout.activity_presentacion);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -40,6 +42,28 @@ public class PresentacionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        tab = new Tablero(new ArrayList<Ficha>());
+
+        tab.addFicha(new Ficha(R.drawable.img_1));
+        tab.addFicha(new Ficha(R.drawable.img_2));
+        tab.addFicha(new Ficha(R.drawable.img_3));
+        tab.addFicha(new Ficha(R.drawable.img_4));
+        tab.addFicha(new Ficha(R.drawable.img_5));
+        tab.addFicha(new Ficha(R.drawable.img_6));
+        tab.addFicha(new Ficha(R.drawable.img_1));
+        tab.addFicha(new Ficha(R.drawable.img_2));
+        tab.addFicha(new Ficha(R.drawable.img_3));
+        tab.addFicha(new Ficha(R.drawable.img_4));
+        tab.addFicha(new Ficha(R.drawable.img_5));
+        tab.addFicha(new Ficha(R.drawable.img_6));
+        RecyclerView list = (RecyclerView)findViewById(R.id.list);
+        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        list.setLayoutManager(layoutManager);
+        AdapterTablero adapterTab = new AdapterTablero(tab.getListaFichas());
+        list.setAdapter(adapterTab);
+
     }
 
     @Override
