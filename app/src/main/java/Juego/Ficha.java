@@ -13,9 +13,9 @@ public class Ficha {
 
     public Ficha( int imgID){
         this.setImgID(imgID);
+        this.visible = false;
+        this.tocada = false;
     }
-
-
 
     public boolean isVisible() {
         return visible;

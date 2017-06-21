@@ -18,10 +18,12 @@ import java.util.ArrayList;
 public class AdapterTablero extends RecyclerView.Adapter<TableroViewHolder>{
 
     private ArrayList<Ficha> listaFichas;
+    private OnFichaClick fichaListener;
 
-    public AdapterTablero(ArrayList<Ficha> fichas){
+    public AdapterTablero(ArrayList<Ficha> fichas, OnFichaClick fichaListener){
 
         listaFichas = fichas;
+        this.fichaListener = fichaListener;
 
     }
 
@@ -29,14 +31,15 @@ public class AdapterTablero extends RecyclerView.Adapter<TableroViewHolder>{
     public TableroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ficha_layout, parent, false);
-        TableroViewHolder tabViewHolder = new TableroViewHolder(v);
+        TableroViewHolder tabViewHolder = new TableroViewHolder(v, fichaListener);
         return tabViewHolder;
     }
 
     @Override
     public void onBindViewHolder(TableroViewHolder holder, int position) {
         Ficha f = listaFichas.get(position);
-        holder.ImagenFicha.setImageResource(f.getImgID());
+        //holder.ImagenFicha.setImageResource(f.getImgID());
+        holder.ImagenFicha.setImageResource(R.drawable.question_icon);
     }
 
     @Override
