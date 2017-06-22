@@ -38,13 +38,26 @@ public class AdapterTablero extends RecyclerView.Adapter<TableroViewHolder>{
     @Override
     public void onBindViewHolder(TableroViewHolder holder, int position) {
         Ficha f = listaFichas.get(position);
-        //holder.ImagenFicha.setImageResource(f.getImgID());
-        holder.ImagenFicha.setImageResource(R.drawable.question_icon);
+        if(f.getTocada()){
+            holder.ImagenFicha.setImageResource(f.getImgID());
+        }
+        else{
+            holder.ImagenFicha.setImageResource(R.drawable.question_icon);
+        }
+
+
     }
 
     @Override
     public int getItemCount() {
         return listaFichas.size();
+    }
+
+    /**
+     * Vuelve a poner todos los imageView de las imágenes en question_icon.
+     */
+    public void resetAllImages(){
+        notifyDataSetChanged();
     }
 }
 

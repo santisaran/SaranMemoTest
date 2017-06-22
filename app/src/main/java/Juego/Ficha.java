@@ -25,13 +25,11 @@ public class Ficha {
         this.visible = visible;
     }
 
-    public boolean isTocada() {
-        return tocada;
-    }
-
     public void setTocada(boolean tocada) {
         this.tocada = tocada;
     }
+
+    public boolean getTocada(){ return tocada;}
 
     public int getImgID() {
         return imgID;

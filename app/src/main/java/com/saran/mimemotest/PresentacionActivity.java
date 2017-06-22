@@ -26,6 +26,7 @@ public class PresentacionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Tablero tab;
+    private AdapterTablero adapterTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +90,14 @@ public class PresentacionActivity extends AppCompatActivity
             GridLayoutManager layoutManager = new GridLayoutManager(this,4);
             //LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             list.setLayoutManager(layoutManager);
-            AdapterTablero adapterTab = new AdapterTablero(tab.getListaFichas(), tab);
+            adapterTab = new AdapterTablero(tab.getListaFichas(), tab);
             list.setAdapter(adapterTab);
             list.setVisibility(View.VISIBLE);
 
             tab.mostrarFichas();
             // Handle the camera action
         }else if (id == R.id.nav_dificulty) {
-
+            adapterTab.resetAllImages();
         }/* else if (id == R.id.nav_send) {
 
         }*/

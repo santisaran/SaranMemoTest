@@ -29,7 +29,7 @@ public class TableroViewHolder extends RecyclerView.ViewHolder implements View.O
      */
     @Override
     public void onClick(View v) {
-        Ficha ficha = listener.onFichaClick(this.getAdapterPosition());
+        Ficha ficha = listener.onFichaClick(this.getAdapterPosition(),ImagenFicha);
         ImagenFicha.setImageResource(ficha.getImgID());
     }
 }
