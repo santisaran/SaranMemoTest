@@ -20,13 +20,13 @@ import java.util.ArrayList;
 
 import Juego.AdapterTablero;
 import Juego.Ficha;
+import Juego.ScreenManager;
 import Juego.Tablero;
 
 public class PresentacionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Tablero tab;
-    private AdapterTablero adapterTab;
+    private ScreenManager sm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class PresentacionActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        sm = null;
     }
 
     @Override
@@ -85,19 +85,14 @@ public class PresentacionActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_game) {
-            tab = new Tablero(6);
-            RecyclerView list = (RecyclerView)findViewById(R.id.list);
-            GridLayoutManager layoutManager = new GridLayoutManager(this,4);
-            //LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            list.setLayoutManager(layoutManager);
-            adapterTab = new AdapterTablero(tab.getListaFichas(), tab);
-            list.setAdapter(adapterTab);
-            list.setVisibility(View.VISIBLE);
 
-            tab.mostrarFichas();
+            sm = new ScreenManager(this);
+
             // Handle the camera action
         }else if (id == R.id.nav_dificulty) {
-            adapterTab.resetAllImages();
+            if(sm!=null) {
+                sm.mostrarFichas();
+            }
         }/* else if (id == R.id.nav_send) {
 
         }*/
