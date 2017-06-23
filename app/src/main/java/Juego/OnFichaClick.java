@@ -7,6 +7,6 @@ import android.widget.ImageView;
  */
 
 public interface OnFichaClick {
-    Ficha onFichaClick(int position, ImageView imagenFicha);
+    void onFichaClick(int position, ImageView imagenFicha);
 
 }

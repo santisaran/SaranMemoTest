@@ -9,12 +9,15 @@ public class Ficha {
 
     private boolean visible;
     private boolean tocada;
+    private boolean matched;
     private int imgID;
+
 
     public Ficha( int imgID){
         this.setImgID(imgID);
         this.visible = false;
         this.tocada = false;
+        this.matched = false;
     }
 
     public boolean isVisible() {
@@ -30,6 +33,10 @@ public class Ficha {
     }
 
     public boolean getTocada(){ return tocada;}
+
+    public void setMatched(){
+        matched = true;
+    }
 
     public int getImgID() {
         return imgID;
