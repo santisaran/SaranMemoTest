@@ -45,4 +45,8 @@ public class Ficha {
     public void setImgID(int imgID) {
         this.imgID = imgID;
     }
+
+    public boolean getMatched() {
+        return matched;
+    }
 }

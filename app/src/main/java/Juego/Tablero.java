@@ -74,36 +74,44 @@ public class Tablero implements OnFichaClick, Handler.Callback{
 
     @Override
     public void onFichaClick(int position, ImageView imagenFicha) {
-        contadorFichasMostradas++;
+
         Ficha fichaClicked = null;
-        if(contadorFichasMostradas<3) {
-            if(contadorFichasMostradas == 1){
-                fichaClicked = listaFichas.get(position);
-                fichaClicked.setTocada(true);
-                imagenFicha.setImageResource(fichaClicked.getImgID());
-                imageViewAux = imagenFicha;
-                fichaAux = fichaClicked;
-            }
-            if(contadorFichasMostradas == 2){
-                fichaClicked = listaFichas.get(position);
-                fichaClicked.setTocada(true);
-                imagenFicha.setImageResource(fichaClicked.getImgID());
-                if(fichaClicked!=fichaAux) {
-                    if (fichaClicked.getImgID() == fichaAux.getImgID()) {
-                        fichaClicked.setMatched();
-                        fichaAux.setMatched();
-                        contadorFichasMostradas = 0;
+        fichaClicked = listaFichas.get(position);
+        if(!fichaClicked.getMatched()) {
+            contadorFichasMostradas++;
+            if (contadorFichasMostradas < 3) {
+                if (contadorFichasMostradas == 1) {
+                    fichaClicked = listaFichas.get(position);
+                    if (!fichaClicked.getMatched()) {
+                        fichaClicked.setTocada(true);
+                        imagenFicha.setImageResource(fichaClicked.getImgID());
+                        imageViewAux = imagenFicha;
+                        fichaAux = fichaClicked;
                     } else {
-                        DemoraThread dt = new DemoraThread(delayHandler, 1000, imagenFicha);
-                        Thread t = new Thread(dt);
-                        t.start();
+                        contadorFichasMostradas = 0;
+                    }
+
+                }
+                if (contadorFichasMostradas == 2) {
+                    fichaClicked = listaFichas.get(position);
+                    fichaClicked.setTocada(true);
+                    imagenFicha.setImageResource(fichaClicked.getImgID());
+                    if (fichaClicked != fichaAux) {
+                        if (fichaClicked.getImgID() == fichaAux.getImgID()) {
+                            fichaClicked.setMatched();
+                            fichaAux.setMatched();
+                            contadorFichasMostradas = 0;
+                        } else {
+                            DemoraThread dt = new DemoraThread(delayHandler, 1000, imagenFicha);
+                            Thread t = new Thread(dt);
+                            t.start();
+                        }
+                    } else { //se hizo click en la misma ficha
+                        contadorFichasMostradas--;
                     }
                 }
-                else{ //se hizo click en la misma ficha
-                    contadorFichasMostradas--;
-                }
+                Log.d("fichas", "tocada ficha" + position);
             }
-            Log.d("fichas", "tocada ficha" + position);
         }
     }
 
