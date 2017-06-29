@@ -34,8 +34,8 @@ public class Ficha {
 
     public boolean getTocada(){ return tocada;}
 
-    public void setMatched(){
-        matched = true;
+    public void setMatched(boolean matched){
+        this.matched = matched;
     }
 
     public int getImgID() {

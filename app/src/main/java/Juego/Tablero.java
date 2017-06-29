@@ -69,7 +69,16 @@ public class Tablero implements OnFichaClick, Handler.Callback{
     }
 
     public void mostrarFichas(){
+        for (Ficha ficha: listaFichas) {
+            ficha.setTocada(true);
+        }
+    }
 
+    public void ocultarFichas(){
+        for (Ficha ficha: listaFichas) {
+            ficha.setTocada(false);
+            ficha.setMatched(false);
+        }
     }
 
     @Override
@@ -98,8 +107,8 @@ public class Tablero implements OnFichaClick, Handler.Callback{
                     imagenFicha.setImageResource(fichaClicked.getImgID());
                     if (fichaClicked != fichaAux) {
                         if (fichaClicked.getImgID() == fichaAux.getImgID()) {
-                            fichaClicked.setMatched();
-                            fichaAux.setMatched();
+                            fichaClicked.setMatched(true);
+                            fichaAux.setMatched(true);
                             contadorFichasMostradas = 0;
                         } else {
                             DemoraThread dt = new DemoraThread(delayHandler, 1000, imagenFicha);

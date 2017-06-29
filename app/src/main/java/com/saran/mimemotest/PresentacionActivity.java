@@ -98,17 +98,22 @@ public class PresentacionActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_game) {
-
-            sm = new ScreenManager(this);
+            if(sm == null) {
+                sm = new ScreenManager(this);
+            }else{
+                sm.restartGame();
+            }
 
             // Handle the camera action
         }else if (id == R.id.nav_dificulty) {
             if(sm!=null) {
+                sm.restartGame();
+            }
+        }else if (id == R.id.nav_mostrar) {
+            if(sm!=null) {
                 sm.mostrarFichas();
             }
-        }/* else if (id == R.id.nav_send) {
-
-        }*/
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

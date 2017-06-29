@@ -24,6 +24,7 @@ public class ScreenManager {
     private RecyclerView list;
     private GridLayoutManager layoutManager;
     private static final String FORMAT = "%02d:%02d";
+    private CountDownTimer cdown;
     TextView text1;
 
     public ScreenManager(Activity a) {
@@ -35,12 +36,16 @@ public class ScreenManager {
         adapterTab = new AdapterTablero(tab.getListaFichas(), tab);
         list.setAdapter(adapterTab);
         list.setVisibility(View.VISIBLE);
-        tab.mostrarFichas();
+
         text1 = (TextView) a.findViewById(R.id.tiempoRestanteText);
-        new CountDownTimer(60000, 1000) {
+        text1.setFocusable(false);
+        text1.setEnabled(false);
+        text1.setCursorVisible(false);
+        text1.setKeyListener(null);
+        cdown = new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-
+                //adapterTab.notifyDataSetChanged();
                 text1.setText("" + String.format(FORMAT,
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
@@ -55,9 +60,23 @@ public class ScreenManager {
             public void onFinish() {
                 text1.setText("done!");
             }
-        }.start();
+        };
+        cdown.start();
     }
+
     public void mostrarFichas(){
+        tab.mostrarFichas();
         adapterTab.notifyDataSetChanged();
+        cdown.cancel();
+        cdown.start();
+    }
+
+    public void restartGame(){
+        tab.shuffleFichas();
+        tab.ocultarFichas();
+
+        adapterTab.notifyDataSetChanged();
+        cdown.cancel();
+        cdown.start();
     }
 }
