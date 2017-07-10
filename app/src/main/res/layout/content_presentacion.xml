@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#000000">
 
     <EditText
         android:id="@+id/tiempoRestanteText"
@@ -19,13 +20,18 @@
         android:textStyle="bold"
         android:focusable="false"/>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:clipToPadding="false"
         android:scrollbars="none"
-        android:visibility="invisible"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp" />
 

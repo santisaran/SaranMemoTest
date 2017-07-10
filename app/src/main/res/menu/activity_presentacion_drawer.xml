@@ -10,11 +10,6 @@
             android:id="@+id/nav_dificulty"
             android:icon="@drawable/ic_menu_brain"
             android:title="@string/difficulty" />
-        <item
-            android:id="@+id/nav_mostrar"
-            android:icon="@drawable/ic_menu_newgame"
-            android:title="Mostrar Fichas"
-            />
     </group>
 
 </menu>

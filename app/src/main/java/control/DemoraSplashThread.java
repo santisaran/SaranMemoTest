@@ -1,10 +1,8 @@
 package control;
 
-import android.media.Image;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.ImageView;
 
 /**
  * Created by saran on 21/06/17.
@@ -12,15 +10,13 @@ import android.widget.ImageView;
  * Demora los milisegundos pasados como parámetro y devuelve luego de ese tiempo, el ImageView.
  */
 
-public class DemoraThread extends Thread {
+public class DemoraSplashThread extends Thread {
     private Handler delayHandler;
     private int milisegundos;
-    private ImageView fichaImageView;
 
-    public DemoraThread(Handler delayHandler, int milisegundos, ImageView iv) {
+    public DemoraSplashThread(Handler delayHandler, int milisegundos) {
         this.delayHandler = delayHandler;
         this.milisegundos = milisegundos;
-        this.fichaImageView = iv;
     }
 
     @Override
@@ -30,14 +26,9 @@ public class DemoraThread extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Log.d("log","un segundo desde que se tocó ficha: ");
+        Log.d("log",milisegundos+" milisegundos");
         Message message = new Message();
-        if(fichaImageView == null){
-            message.obj = milisegundos;
-        }
-        else {
-            message.obj = fichaImageView;
-        }
+        message.obj = milisegundos;
         delayHandler.sendMessage(message);
     }
 }

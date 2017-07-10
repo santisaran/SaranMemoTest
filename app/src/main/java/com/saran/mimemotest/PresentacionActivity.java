@@ -1,14 +1,9 @@
-    package com.saran.mimemotest;
+package com.saran.mimemotest;
 
-import android.content.res.Configuration;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,35 +12,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import Juego.AdapterTablero;
-import Juego.Ficha;
 import Juego.ScreenManager;
-import Juego.Tablero;
+import control.DemoraSplashThread;
 
 public class PresentacionActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Handler.Callback{
 
     private ScreenManager sm;
+    private Handler delayHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_presentacion);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-        //        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //drawer.setDrawerListener(toggle);
-        //toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        setContentView(R.layout.splashscreen_layout);
+        delayHandler = new Handler(this);
+        DemoraSplashThread dt = new DemoraSplashThread(delayHandler,2000);
+        Thread t = new Thread(dt);
+        t.start();
         sm = null;
+
     }
 
     @Override
@@ -56,17 +43,6 @@ public class PresentacionActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.activity_presentacion);
-        Log.d("configuracion","rotado");
-        if(sm!=null) {
-            sm.mostrarFichas();
-        }
-
     }
 
     @Override
@@ -107,16 +83,36 @@ public class PresentacionActivity extends AppCompatActivity
             // Handle the camera action
         }else if (id == R.id.nav_dificulty) {
             if(sm!=null) {
+                Context context = getApplicationContext();
+                CharSequence text = getString(R.string.nivel1);
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+
                 sm.restartGame();
             }
-        }else if (id == R.id.nav_mostrar) {
-            if(sm!=null) {
-                sm.mostrarFichas();
-            }
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public boolean handleMessage(Message msg) {
+        setContentView(R.layout.activity_presentacion);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        return false;
     }
 }

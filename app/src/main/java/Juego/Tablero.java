@@ -17,12 +17,14 @@ import control.DemoraThread;
  */
 
 
-public class Tablero implements OnFichaClick, Handler.Callback{
+public class Tablero implements OnFichaClick, Handler.Callback {
 
     private int contadorFichasMostradas;
     private Handler delayHandler;
     private ImageView imageViewAux;
     private Ficha fichaAux;
+    private int Vidas;
+    private ScreenManager sm;
 
     static final int[] imagenes = {
             R.drawable.img_1, R.drawable.img_2, R.drawable.img_3,
@@ -31,7 +33,8 @@ public class Tablero implements OnFichaClick, Handler.Callback{
     
     private ArrayList<Ficha> listaFichas;
 
-    public Tablero(int nroPiezas){
+    public Tablero(int nroPiezas, ScreenManager sm){
+        this.sm = sm;
         contadorFichasMostradas = 0;
         //me aseguro que no se puedan poner mas fichas de las que existen.
         if(nroPiezas>imagenes.length){
@@ -48,8 +51,17 @@ public class Tablero implements OnFichaClick, Handler.Callback{
             }
         }
         shuffleFichas();
+        Vidas = 3;
         delayHandler = new Handler(this);
         fichaAux = null;
+    }
+
+    public int getFallas() {
+        return Vidas;
+    }
+
+    public void setFallas(int fallas) {
+        this.Vidas = fallas;
     }
 
     public void shuffleFichas(){
@@ -111,9 +123,17 @@ public class Tablero implements OnFichaClick, Handler.Callback{
                             fichaAux.setMatched(true);
                             contadorFichasMostradas = 0;
                         } else {
-                            DemoraThread dt = new DemoraThread(delayHandler, 1000, imagenFicha);
-                            Thread t = new Thread(dt);
-                            t.start();
+                            if(--Vidas!=0) {
+                                DemoraThread dt = new DemoraThread(delayHandler, 200, imagenFicha);
+                                Thread t = new Thread(dt);
+                                t.start();
+                            }
+                            else {
+                                sm.restartGame();
+                                Vidas = 5;
+                                contadorFichasMostradas = 0;
+                            }
+
                         }
                     } else { //se hizo click en la misma ficha
                         contadorFichasMostradas--;
