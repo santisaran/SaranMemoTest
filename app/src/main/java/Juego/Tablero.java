@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import control.DemoraThread;
+import vista.ScreenManager;
 
 /**
  * Created by saran on 17/06/17.
@@ -108,6 +109,13 @@ public class Tablero implements OnFichaClick, Handler.Callback {
                         imagenFicha.setImageResource(fichaClicked.getImgID());
                         imageViewAux = imagenFicha;
                         fichaAux = fichaClicked;
+                        boolean unFlag = true;
+                        for (Ficha ficha: listaFichas) {
+                            if(!ficha.getTocada()){
+                                unFlag = false;
+                            }
+
+                        }
                     } else {
                         contadorFichasMostradas = 0;
                     }
@@ -129,7 +137,7 @@ public class Tablero implements OnFichaClick, Handler.Callback {
                                 t.start();
                             }
                             else {
-                                sm.restartGame();
+                                sm.endGame();
                                 Vidas = 5;
                                 contadorFichasMostradas = 0;
                             }

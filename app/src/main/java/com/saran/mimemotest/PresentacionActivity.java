@@ -1,20 +1,20 @@
 package com.saran.mimemotest;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import Juego.ScreenManager;
+import control.MemoTestOpenHelper;
+import vista.ScreenManager;
 import control.DemoraSplashThread;
 
 public class PresentacionActivity extends AppCompatActivity
@@ -22,6 +22,7 @@ public class PresentacionActivity extends AppCompatActivity
 
     private ScreenManager sm;
     private Handler delayHandler;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,9 @@ public class PresentacionActivity extends AppCompatActivity
         Thread t = new Thread(dt);
         t.start();
         sm = null;
+        MemoTestOpenHelper openHelper = new MemoTestOpenHelper(this, "memotdb.db");
+        setDb(openHelper.getWritableDatabase());
+
 
     }
 
@@ -114,5 +118,13 @@ public class PresentacionActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         return false;
+    }
+
+    public SQLiteDatabase getDb() {
+        return db;
+    }
+
+    public void setDb(SQLiteDatabase db) {
+        this.db = db;
     }
 }
