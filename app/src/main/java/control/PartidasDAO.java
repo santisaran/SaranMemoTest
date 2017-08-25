@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.icu.text.MessagePattern;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Juego.Partidas;
@@ -68,7 +69,40 @@ public class PartidasDAO implements DAOInterface<Partidas> {
         }
 
     @Override
-    public List<Partidas> getAll() {
-        return null;
+    public ArrayList<Partidas> getAll() {
+        ArrayList<Partidas> lista_partidas = new ArrayList<Partidas>();
+
+        Cursor c;
+        c = db.rawQuery("SELECT nombre,tiempo,vidas" +
+                " FROM jugadas",null);
+
+        if(c.moveToFirst())
+        {
+            do {
+                if(c != null) {
+                    Partidas partida = new Partidas();
+                    partida.setNombreJugador(c.getString(0));
+                    partida.setTiempo(c.getLong(1));
+                    partida.setVidas(c.getInt(2));
+                    lista_partidas.add (partida);
+                }
+            }while(c.moveToNext());
+        }
+        if(!c.isClosed())
+        {
+            c.close();
+        }
+        return lista_partidas;
+    }
+
+    @Override
+    public int getItemCount() {
+        int cuenta = 0;
+        Cursor c;
+        c = db.rawQuery("SELECT Count(*) FROM jugadas order by tiempo",null);
+        if(c.moveToFirst()) {
+            cuenta = c.getInt(0);
+        }
+        return cuenta;
     }
 }

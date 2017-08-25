@@ -7,9 +7,13 @@
             android:icon="@drawable/ic_menu_newgame"
             android:title="@string/newGame" />
         <item
-            android:id="@+id/nav_dificulty"
+            android:id="@+id/nav_difficulty"
             android:icon="@drawable/ic_menu_brain"
             android:title="@string/difficulty" />
+        <item
+            android:id="@+id/nav_ranking"
+            android:title="@string/ranking"/>
+
     </group>
 
 </menu>

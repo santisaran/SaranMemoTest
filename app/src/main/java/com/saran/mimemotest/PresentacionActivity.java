@@ -1,17 +1,25 @@
 package com.saran.mimemotest;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.NavigationView;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.saran.mimemotest.dummy.DummyContent;
 
 import control.MemoTestOpenHelper;
 import vista.ScreenManager;
@@ -20,6 +28,7 @@ import control.DemoraSplashThread;
 public class PresentacionActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Handler.Callback{
 
+    private int postion;
     private ScreenManager sm;
     private Handler delayHandler;
     private SQLiteDatabase db;
@@ -83,19 +92,47 @@ public class PresentacionActivity extends AppCompatActivity
             }else{
                 sm.restartGame();
             }
+            Context context = getApplicationContext();
+            CharSequence text = getString(R.string.nivel) + sm.getTab().getDificultad();
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
 
             // Handle the camera action
-        }else if (id == R.id.nav_dificulty) {
+        }else if (id == R.id.nav_difficulty) {
             if(sm!=null) {
-                Context context = getApplicationContext();
-                CharSequence text = getString(R.string.nivel1);
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
 
-                sm.restartGame();
+                final AlertDialog.Builder singlechoicedialog = new AlertDialog.Builder(this);
+                final CharSequence[] Report_items = { "NIVEL I", "NIVEL II", "NIVEL III"};
+                singlechoicedialog.setTitle(getString(R.string.selDif));
+                singlechoicedialog.setSingleChoiceItems(Report_items, -1,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                sm.getTab().setDificultad(item+1);
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert_dialog = singlechoicedialog.create();
+                alert_dialog.show();
+
+// set defult select value
+                alert_dialog.getListView().setItemChecked(postion, true);
             }
+        }else if(id == R.id.nav_ranking){
+            if(sm==null) {
+                sm = new ScreenManager(this);
+            }
+            Fragment fragment;
+            fragment = new PartidasFragment();
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.contenedor    , fragment)
+                    .commit();
+            //sm.mostrarRanking().show();
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -127,4 +164,5 @@ public class PresentacionActivity extends AppCompatActivity
     public void setDb(SQLiteDatabase db) {
         this.db = db;
     }
+
 }

@@ -25,6 +25,7 @@ public class Tablero implements OnFichaClick, Handler.Callback {
     private ImageView imageViewAux;
     private Ficha fichaAux;
     private int Vidas;
+    private int dificultad;
     private ScreenManager sm;
 
     static final int[] imagenes = {
@@ -34,7 +35,8 @@ public class Tablero implements OnFichaClick, Handler.Callback {
     
     private ArrayList<Ficha> listaFichas;
 
-    public Tablero(int nroPiezas, ScreenManager sm){
+    public Tablero(int nroPiezas, ScreenManager sm, int dificultad){
+        this.setDificultad(dificultad);
         this.sm = sm;
         contadorFichasMostradas = 0;
         //me aseguro que no se puedan poner mas fichas de las que existen.
@@ -94,6 +96,17 @@ public class Tablero implements OnFichaClick, Handler.Callback {
         }
     }
 
+    public boolean getAllMatch(){
+        boolean retVal = true;
+        for (Ficha ficha: listaFichas){
+            if(ficha.getMatched() == false){
+                retVal = false;
+                break;
+            }
+        }
+        return retVal;
+    }
+
     @Override
     public void onFichaClick(int position, ImageView imagenFicha) {
 
@@ -130,7 +143,16 @@ public class Tablero implements OnFichaClick, Handler.Callback {
                             fichaClicked.setMatched(true);
                             fichaAux.setMatched(true);
                             contadorFichasMostradas = 0;
+                            if(getAllMatch()){
+                                sm.endGame();
+                                Vidas = 5;
+                                contadorFichasMostradas = 0;
+                            }
+                            else{
+                                sm.mostrarCoincidencia();
+                            }
                         } else {
+
                             if(--Vidas!=0) {
                                 DemoraThread dt = new DemoraThread(delayHandler, 200, imagenFicha);
                                 Thread t = new Thread(dt);
@@ -158,5 +180,13 @@ public class Tablero implements OnFichaClick, Handler.Callback {
         imageViewAux.setImageResource(R.drawable.question_icon);
         ((ImageView)msg.obj).setImageResource(R.drawable.question_icon);
         return false;
+    }
+
+    public int getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
     }
 }

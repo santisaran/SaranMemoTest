@@ -7,7 +7,12 @@
     <string name="action_settings">Settings</string>
     <string name="newGame">New Game</string>
     <string name="difficulty">Difficulty</string>
-    <string name="nivel1">Nivel 1</string>
-    <string name="nivel2">Nivel 2</string>
-    <string name="nivel3">Nivel 3</string>
+    <string name="ranking">Ranking</string>
+    <string name="coincid">Hubo Coincidencia!</string>
+    <string name="newmark">Nueva marca de tiempo</string>
+    <string name="nivel">Nivel</string>
+    <string name="selDif">Seleccionar Dificultad</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -11,9 +11,7 @@ import com.saran.mimemotest.R;
  */
 
 public class TableroViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    private int contadorToques;
     private OnFichaClick listener;
-    private Ficha fichaAux;
     ImageView ImagenFicha;
 
     public TableroViewHolder(View itemView, OnFichaClick fichaListener) {
@@ -21,7 +19,6 @@ public class TableroViewHolder extends RecyclerView.ViewHolder implements View.O
         ImagenFicha = (ImageView) itemView.findViewById(R.id.imgFichaID);
         itemView.setOnClickListener(this);
         this.listener = fichaListener;
-        contadorToques = 0;
     }
 
     /**
